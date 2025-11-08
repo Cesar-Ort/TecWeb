@@ -61,7 +61,19 @@
     $c = (double) $a;
     var_dump($a, $b, $c);
 
-    
+    echo "<h2>Ejercicio 6</h2>";
+    $a = "0";
+    $b = "TRUE";
+    $c = FALSE;
+    $d = ($a OR $b);
+    $e = ($a AND $c);
+    $f = ($a XOR $b);
+
+    var_dump($a, $b, $c, $d, $e, $f);
+
+    // Para mostrar booleanos en texto:
+    echo "<br>c: " . var_export($c, true);
+    echo "<br>e: " . var_export($e, true);
     ?>
 </body>
 </html>
