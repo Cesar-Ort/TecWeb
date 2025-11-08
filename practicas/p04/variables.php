@@ -47,6 +47,12 @@
     $z[0] = "MySQL";
 
     var_dump($a, $b, $c, $z);
+
+       echo "<h2>Ejercicio 4</h2>";
+    global $a, $b, $c, $z;
+    echo "<p>Desde global: $a, $b, $c</p>";
+    print_r($GLOBALS);
+
     ?>
 </body>
 </html>
