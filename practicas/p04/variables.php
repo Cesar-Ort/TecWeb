@@ -21,6 +21,21 @@
         */ 
         echo "<p> Las variables válidas son: \$myvar, \$var7, \$_myvar, \$_element1</p>";
 
+
+        echo "<h2>Ejercicio 2</h2>";
+        $a = "ManejadorSQL";
+        $b = 'MySQL';
+        $c = &$a;
+
+        echo "\$a = $a, \$b = $b, \$c = $c<br>";
+
+        $a = "PHP Server";
+        $b = &$a; 
+
+        echo "Déspues de la reasignaciones:<br>";
+        echo "\$a = $a, \$b = $b, \$c = $c<br>";
+
+        echo "El valor \$c sigue siendo referencia al valor actual de \$a.";
     ?>
 </body>
 </html>
