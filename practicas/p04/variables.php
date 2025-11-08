@@ -53,6 +53,15 @@
     echo "<p>Desde global: $a, $b, $c</p>";
     print_r($GLOBALS);
 
+
+    echo "<h2>Ejercicio 5</h2>";
+    $a = "7 personas";
+    $b = (integer) $a;
+    $a = "9E3";
+    $c = (double) $a;
+    var_dump($a, $b, $c);
+
+    
     ?>
 </body>
 </html>
