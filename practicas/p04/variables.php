@@ -74,6 +74,13 @@
     // Para mostrar booleanos en texto:
     echo "<br>c: " . var_export($c, true);
     echo "<br>e: " . var_export($e, true);
+
+
+    echo "<h2>Ejercicio 7</h2>";
+
+    echo "Versión de Apache y PHP: " . $_SERVER['SERVER_SOFTWARE'] . "<br>";
+    echo "Sistema operativo del servidor: " . PHP_OS . "<br>";
+    echo "Idioma del navegador: " . $_SERVER['HTTP_ACCEPT_LANGUAGE'] . "<br>";
     ?>
 </body>
 </html>
