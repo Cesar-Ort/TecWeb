@@ -36,6 +36,17 @@
         echo "\$a = $a, \$b = $b, \$c = $c<br>";
 
         echo "El valor \$c sigue siendo referencia al valor actual de \$a.";
+
+        echo "<h2>Ejercicio 3</h2>";
+        $a = "PHP5";
+    $z[] = &$a;
+    $b = "5a version de PHP";
+    $c = $b * 10; 
+    $a .= $b;
+    $b *= $c;
+    $z[0] = "MySQL";
+
+    var_dump($a, $b, $c, $z);
     ?>
 </body>
 </html>
