@@ -81,6 +81,8 @@
     echo "Versión de Apache y PHP: " . $_SERVER['SERVER_SOFTWARE'] . "<br>";
     echo "Sistema operativo del servidor: " . PHP_OS . "<br>";
     echo "Idioma del navegador: " . $_SERVER['HTTP_ACCEPT_LANGUAGE'] . "<br>";
+
+    //unset($a, $b, $c, $d, $e, $f, $z);
     ?>
 </body>
 </html>
