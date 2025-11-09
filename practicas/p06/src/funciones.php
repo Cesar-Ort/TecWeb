@@ -71,4 +71,74 @@
         }
         return $arr;
     }
+
+//Sexto ejercicio
+    function registroVehicular(){
+         $vehicles = [
+        'ABC1001' => [
+            'Auto' => ['marca' => 'HONDA', 'modelo' => 2020, 'tipo' => 'camioneta'],
+            'Propietario' => ['nombre' => 'Alfonzo Esparza', 'ciudad' => 'Puebla, Pue.', 'direccion' => 'C.U., Jardines de San Manuel']
+        ],
+        'DEF2002' => [
+            'Auto' => ['marca' => 'MAZDA', 'modelo' => 2019, 'tipo' => 'sedan'],
+            'Propietario' => ['nombre' => 'Ma. del Consuelo Molina', 'ciudad' => 'Puebla, Pue.', 'direccion' => '97 oriente']
+        ],
+        'GHI3003' => [
+            'Auto' => ['marca' => 'TOYOTA', 'modelo' => 2018, 'tipo' => 'sedan'],
+            'Propietario' => ['nombre' => 'Luis García', 'ciudad' => 'México, CDMX', 'direccion' => 'Av. Reforma 123']
+        ],
+        'JKL4004' => [
+            'Auto' => ['marca' => 'FORD', 'modelo' => 2021, 'tipo' => 'hatchback'],
+            'Propietario' => ['nombre' => 'Ana Pérez', 'ciudad' => 'Guadalajara, Jal.', 'direccion' => 'Calle Hidalgo 45']
+        ],
+        'MNO5005' => [
+            'Auto' => ['marca' => 'NISSAN', 'modelo' => 2017, 'tipo' => 'sedan'],
+            'Propietario' => ['nombre' => 'Carlos López', 'ciudad' => 'Monterrey, N.L.', 'direccion' => 'Col. Centro 10']
+        ],
+        'PQR6006' => [
+            'Auto' => ['marca' => 'KIA', 'modelo' => 2016, 'tipo' => 'camioneta'],
+            'Propietario' => ['nombre' => 'María Torres', 'ciudad' => 'León, Gto.', 'direccion' => 'Blvd. del Parque 8']
+        ],
+        'STU7007' => [
+            'Auto' => ['marca' => 'CHEVROLET', 'modelo' => 2015, 'tipo' => 'hatchback'],
+            'Propietario' => ['nombre' => 'Pedro Jiménez', 'ciudad' => 'Querétaro, Qro.', 'direccion' => 'Av. Central 55']
+        ],
+        'VWX8008' => [
+            'Auto' => ['marca' => 'VOLKSWAGEN', 'modelo' => 2014, 'tipo' => 'sedan'],
+            'Propietario' => ['nombre' => 'Sofía Ramírez', 'ciudad' => 'Toluca, Méx.', 'direccion' => 'C. Juárez 200']
+        ],
+        'YZA9009' => [
+            'Auto' => ['marca' => 'HYUNDAI', 'modelo' => 2013, 'tipo' => 'sedan'],
+            'Propietario' => ['nombre' => 'Miguel Ángel', 'ciudad' => 'Cancún, Q.R.', 'direccion' => 'Zona Hotelera 3']
+        ],
+        'BCD1010' => [
+            'Auto' => ['marca' => 'SUBARU', 'modelo' => 2022, 'tipo' => 'camioneta'],
+            'Propietario' => ['nombre' => 'Laura Méndez', 'ciudad' => 'Puebla, Pue.', 'direccion' => 'Av. Brasil 77']
+        ],
+        'EFG1111' => [
+            'Auto' => ['marca' => 'MAZDA', 'modelo' => 2021, 'tipo' => 'sedan'],
+            'Propietario' => ['nombre' => 'Diego Rivera', 'ciudad' => 'Oaxaca, Oax.', 'direccion' => 'Centro 12']
+        ],
+        'HIJ1212' => [
+            'Auto' => ['marca' => 'HONDA', 'modelo' => 2012, 'tipo' => 'hatchback'],
+            'Propietario' => ['nombre' => 'Cristina Flores', 'ciudad' => 'Puebla, Pue.', 'direccion' => 'Villas del Sol 4']
+        ],
+        'KLM1313' => [
+            'Auto' => ['marca' => 'RENAULT', 'modelo' => 2010, 'tipo' => 'sedan'],
+            'Propietario' => ['nombre' => 'Raúl Mendoza', 'ciudad' => 'Veracruz, Ver.', 'direccion' => 'Col. Reforma 3']
+        ],
+        'NOP1414' => [
+            'Auto' => ['marca' => 'BMW', 'modelo' => 2019, 'tipo' => 'sedan'],
+            'Propietario' => ['nombre' => 'Isabel Soto', 'ciudad' => 'Puebla, Pue.', 'direccion' => 'Lomas 9']
+        ],
+        'QRS1515' => [
+            'Auto' => ['marca' => 'AUDI', 'modelo' => 2018, 'tipo' => 'camioneta'],
+            'Propietario' => ['nombre' => 'Fernando Cruz', 'ciudad' => 'Chihuahua, Chih.', 'direccion' => 'Av. Independencia 2']
+        ]
+    ];
+    return $vehicles;
+    }
+    function validarMatriculaFormato($mat) {
+    return preg_match('/^[A-Z]{3}[0-9]{4}$/', strtoupper($mat)) === 1;
+    }
 ?>
