@@ -74,7 +74,7 @@
 
 //Sexto ejercicio
     function registroVehicular(){
-         $vehicles = [
+         $vehiculos = [
         'ABC1001' => [
             'Auto' => ['marca' => 'HONDA', 'modelo' => 2020, 'tipo' => 'camioneta'],
             'Propietario' => ['nombre' => 'Alfonzo Esparza', 'ciudad' => 'Puebla, Pue.', 'direccion' => 'C.U., Jardines de San Manuel']
@@ -136,7 +136,7 @@
             'Propietario' => ['nombre' => 'Fernando Cruz', 'ciudad' => 'Chihuahua, Chih.', 'direccion' => 'Av. Independencia 2']
         ]
     ];
-    return $vehicles;
+    return $vehiculos;
     }
     function validarMatriculaFormato($mat) {
     return preg_match('/^[A-Z]{3}[0-9]{4}$/', strtoupper($mat)) === 1;
