@@ -26,7 +26,7 @@
 			<li><strong>E-mail:</strong> <em><?php echo $_POST['email']; ?></em></li>
 			<li><strong>Télefono:</strong> <em><?php echo $_POST['tel']; ?></em></li>
 		</ul>
-		<p><strong>Tu triste historia:</strong> <em><?php echo $_POST['story']; ?></em></p>
+		<p><strong>Tu triste historia:</strong> <em><?php echo $_POST['descripcion']; ?></em></p>
 
 		<h2>Tu diseño de Tenis (si ganas)</h2>
 		<ul>

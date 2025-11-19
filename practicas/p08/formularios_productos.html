@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" >
+    <title>Registro al Concurso</title>
+    <style type="text/css">
+      body { font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; max-width: 900px; margin: 24px auto; padding: 0 12px; }
+        ul { list-style-type: none; padding-left: 0;}
+        legend {font-weight: bold; }
+        fieldset { margin-top: 16px; padding: 15px; }
+        li { margin: 10px 0; }
+        label { display: inline-block; width: 160px; }
+        .actions { margin-top: 12px; }
+    </style>
+  </head>
+<body>
+  <h1>Agregación de producto</h1>
+
+  <!-- Observación: si en el futuro quieres subir un archivo, añade enctype="multipart/form-data" -->
+  <form id="formularioProducto" action="http://localhost/tecweb/practicas/p08/set_producto_v2.php" method="post">
+
+    <fieldset>
+      <legend>Formulario para agregar producto</legend>
+      <ul>
+        <li>
+          <label for="nombre">Nombre:</label>
+          <input type="text" name="nombre" id="nombre" required maxlength="100" placeholder="Nombre del producto">
+        </li>
+        <li>
+          <label for="marca">Marca:</label>
+          <input type="text" name="marca" id="marca" required maxlength="50" placeholder="Marca del producto">
+        </li>
+        <li>
+          <label for="modelo">Modelo:</label>
+          <input type="text" name="modelo" id="modelo" required maxlength="100" placeholder="Modelo del producto">
+        </li>
+        <li>
+          <label for="precio">Precio:</label>
+          <input type="number" name="precio" id="precio"  required step="0.01" min="0" max="1000000" placeholder="Precio al público">
+        </li>
+        <li>
+          <label for="cantidad">Unidades:</label>
+          <input type="number" name="cantidad" id="cantidad" required min="0" max="100000" placeholder="Piezas disponibles">
+        </li>
+        <li>
+          <label for="detalles">Detalles:</label>
+          <input type="text" name="detalles" id="detalles" maxlength="300" placeholder="Descripción del producto ">
+        </li>
+        <li>
+          <label for="imagen">Imagen (URL):</label>
+          <textarea name="imagen" id="imagen" rows="3" cols="60" maxlength="500" placeholder="URL de la imagen (opcional)"></textarea>
+        </li>
+      </ul>
+    </fieldset>
+
+    <p class="actions">
+      <input type="submit" value="Enviar formulario">
+      <input type="reset" value="Restablecer">
+    </p>
+  </form>
+</body>
+</html>
