@@ -24,7 +24,7 @@
 		<ul>
 			<li><strong>Nombre:</strong> <em><?php echo $_POST['name']; ?></em></li>
 			<li><strong>E-mail:</strong> <em><?php echo $_POST['email']; ?></em></li>
-			<li><strong>Télefono:</strong> <em><?php echo $_POST['phone']; ?></em></li>
+			<li><strong>Télefono:</strong> <em><?php echo $_POST['tel']; ?></em></li>
 		</ul>
 		<p><strong>Tu triste historia:</strong> <em><?php echo $_POST['story']; ?></em></p>
 
