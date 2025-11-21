@@ -1,14 +1,13 @@
 <?php
-// set_producto_v2.php
 header('Content-Type: text/html; charset=utf-8');
 
-// Configuración de conexión (ajusta si corresponde)
+
 $dbHost = 'localhost';
 $dbName = 'marketzone';
 $dbUser = 'root';
-$dbPass = 'celo218crlo218.'; // si prefieres, mueve esto a config.php (no subir a GitHub)
+$dbPass = 'celo218crlo218.'; 
 
-// Recibir datos (coinciden con el HTML corregido)
+// Reciben datos
 $nombre   = trim($_POST['nombre']   ?? '');
 $marca    = trim($_POST['marca']    ?? '');
 $modelo   = trim($_POST['modelo']   ?? '');
@@ -17,7 +16,7 @@ $cantidad = $_POST['cantidad'] ?? null;
 $detalles = trim($_POST['detalles'] ?? '');
 $imagen   = trim($_POST['imagen']   ?? '');
 
-// Validaciones de servidor
+// Valida el servidor
 $errors = [];
 
 // Campos obligatorios
@@ -61,7 +60,7 @@ try {
         PDO::ATTR_EMULATE_PREPARES => false,
     ]);
 
-    // 1) Comprobar duplicado (nombre + modelo + marca)
+    // Comprobamos si existe algun duplicado (nombre + modelo + marca)
     $sqlCheck = "SELECT id FROM productos WHERE nombre = :nombre AND modelo = :modelo AND marca = :marca LIMIT 1";
     $stmt = $pdo->prepare($sqlCheck);
     $stmt->execute([
@@ -76,7 +75,7 @@ try {
         exit;
     }
 
-    // 2) Insertar usando column names (eliminado debe tener DEFAULT 0 en la BD)
+    // Insertamos utilizando column names (eliminado debe tener DEFAULT 0 en la BD)
     $sqlInsert = "
       INSERT INTO productos (nombre, marca, modelo, precio, cantidad, detalles, imagen)
       VALUES (:nombre, :marca, :modelo, :precio, :cantidad, :detalles, :imagen)
@@ -107,7 +106,7 @@ try {
     echo "<p><a href='formulario_productos.html'>Agregar otro producto</a></p>";
 
 } catch (PDOException $e) {
-    // Control de errores más amigable que mostrar stacktrace directamente
+    // Control de errores 
     echo "<h3>Error de base de datos:</h3>";
     echo "<p>" . htmlspecialchars($e->getMessage()) . "</p>";
     echo "<p><a href='formulario_productos.html'>Regresar</a></p>";
