@@ -16,7 +16,7 @@
 <body>
   <h1>Agregación de producto</h1>
 
-  <!-- Observación: si en el futuro quieres subir un archivo, añade enctype="multipart/form-data" -->
+  
   <form id="formularioProducto" action="http://localhost/tecweb/practicas/p08/set_producto_v2.php" method="post">
 
     <fieldset>
@@ -24,27 +24,34 @@
       <ul>
         <li>
           <label for="nombre">Nombre:</label>
-          <input type="text" name="nombre" id="nombre" required maxlength="100" placeholder="Nombre del producto">
+          <input type="text" name="nombre" id="nombre"  placeholder="Nombre del producto">
         </li>
         <li>
           <label for="marca">Marca:</label>
-          <input type="text" name="marca" id="marca" required maxlength="50" placeholder="Marca del producto">
+          <select name="marca" id="marca" >
+              <option value="">-- SELECCIONA UNO --</option>
+              <option value="lenovo">Lenovo</option>
+              <option value="hp">HP</option>
+              <option value="dell">Dell</option>
+              <option value="acer">Acer</option>
+              <option value="huawei">Huawei</option>
+          </select>
         </li>
         <li>
           <label for="modelo">Modelo:</label>
-          <input type="text" name="modelo" id="modelo" required maxlength="100" placeholder="Modelo del producto">
+          <input type="text" name="modelo" id="modelo"  placeholder="Modelo de equipo">
         </li>
         <li>
           <label for="precio">Precio:</label>
-          <input type="number" name="precio" id="precio"  required step="0.01" min="0" max="1000000" placeholder="Precio al público">
+          <input type="number" name="precio" id="precio"   min="100" max="1000000" placeholder="Precio al público">
         </li>
         <li>
           <label for="cantidad">Unidades:</label>
-          <input type="number" name="cantidad" id="cantidad" required min="0" max="100000" placeholder="Piezas disponibles">
+          <input type="number" name="cantidad" id="cantidad"  max="100000" placeholder="Piezas disponibles">
         </li>
         <li>
           <label for="detalles">Detalles:</label>
-          <input type="text" name="detalles" id="detalles" maxlength="300" placeholder="Descripción del producto ">
+          <input type="text" name="detalles" id="detalles" maxlength="250" placeholder="Descripción del producto ">
         </li>
         <li>
           <label for="imagen">Imagen (URL):</label>
@@ -58,5 +65,74 @@
       <input type="reset" value="Restablecer">
     </p>
   </form>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("formularioProducto");
+
+    form.addEventListener("submit", function (event) {
+        
+        // Obtener valores
+        const nombre = document.getElementById("nombre").value.trim();
+        const marca = document.getElementById("marca").value;
+        const modelo = document.getElementById("modelo").value.trim();
+        const precioRaw = document.getElementById("precio").value;
+        const precio = precioRaw === "" ? NaN : parseFloat(precioRaw);
+        const detalles = document.getElementById("detalles").value.trim();
+        const unidadesRaw = document.getElementById("cantidad").value;
+        const unidades = unidadesRaw === "" ? NaN : parseInt(unidadesRaw, 10);
+        const imagen = document.getElementById("imagen").value.trim();
+
+        let errores = "";
+
+        // Validación del nombre: menos de 100 caracteres
+        if (nombre === "" || nombre.length > 100) {
+            errores += "- El nombre es obligatorio y debe tener máximo 100 caracteres.\n";
+        }
+
+        // Validación de la marca: debe elegirse (select)
+        if (marca === "" ) {
+            errores += "- Debes seleccionar una marca.\n";
+        }
+
+        // Validación del modelo: que sea alfanumérico y menos de 25 caracteres
+        const regexModelo = /^[A-Za-z0-9\s\-]+$/;
+        if (modelo === "" || modelo.length > 25 || !regexModelo.test(modelo)) {
+            errores += "- El modelo es obligatorio, máximo 25 caracteres y solo caracteres alfanuméricos, espacios o guiones.\n";
+        }
+
+        // Validación del precio: debe ser mayor a 99.99
+        if (isNaN(precio) || precio <= 99.99) {
+            errores += "- El precio debe ser un número mayor a 99.99.\n";
+        }
+
+        // Validación de los detalles: es opcional, pero si se usa que sea menor a 250 caracteres
+        if (detalles.length > 250) {
+            errores += "- Los detalles deben tener máximo 250 caracteres.\n";
+        }
+
+        // Validación de las unidades: tiene que ser mayor a 0
+        if (isNaN(unidades) || unidades < 0) {
+            errores += "- Las unidades deben ser un número entero mayor o igual a 0.\n";
+        }
+
+        // Validación de la imagen: si está vacío, se asigna ruta por defecto (no impide envío)
+        if (imagen === "") {
+            // No sobrescribimos si el servidor espera no enviar imagen; ajusta si tu backend espera otro comportamiento.
+            document.getElementById("imagen").value = "src/imagen.png";
+        }
+
+        // Si hay errores → cancelar envío
+        if (errores !== "") {
+            alert("Corrige los siguientes errores:\n\n" + errores);
+            event.preventDefault();
+            return false;
+        }
+
+        
+    });
+});
+
+  </script>
 </body>
 </html>
