@@ -29,8 +29,8 @@ if ($resultado === false) {
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
 <head>
     <title>Productos - Marketzone</title>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
@@ -69,7 +69,7 @@ if ($resultado->num_rows === 0) {
         $precio = isset($row['precio']) ? htmlspecialchars($row['precio']) : '';
         $detalles = isset($row['detalles']) ? htmlspecialchars($row['detalles']) : '';
         
-        // CORREGIDO: Verificar si existe la columna 'unidades' o 'cantidad'
+        // Verificar si existe la columna 'unidades' o 'cantidad'
         if (isset($row['unidades'])) {
             $unidades = intval($row['unidades']);
         } elseif (isset($row['cantidad'])) {
@@ -91,7 +91,7 @@ if ($resultado->num_rows === 0) {
             $imgSrc = ''; 
         }
 
-        echo "<div class=\"producto\" id=\"prod-$id\">";
+        echo "<div class=\"producto\" id=\"prod-" . $id . "\">";
         if ($imgSrc !== '') {
             echo "<img src=\"" . htmlspecialchars($imgSrc) . "\" alt=\"" . $nombre . "\" class=\"thumb\" />";
         }
@@ -101,17 +101,18 @@ if ($resultado->num_rows === 0) {
         echo "<p>" . nl2br($detalles) . "</p>";
         echo "<p><a href=\"get_producto_by_id.php?id=" . $id . "\">Ver detalle</a></p>";
         
-        // CORREGIDO: Usar htmlspecialchars para toda la URL (convierte & en &amp; automáticamente)
-        $urlModificar = htmlspecialchars(
-            "formulario_productos_v2.php?id=" . $row['id'] . 
-            "&nombre=" . urlencode($row['nombre']) .
-            "&marca=" . urlencode($row['marca']) .
-            "&modelo=" . urlencode($row['modelo']) .
-            "&precio=" . urlencode($row['precio']) .
-            "&cantidad=" . $unidades .
-            "&detalles=" . urlencode($row['detalles']) .
-            "&imagen=" . urlencode($row['imagen'])
-        );
+        // SOLUCIÓN XHTML: Construir la URL completa y luego aplicar str_replace para convertir & en &amp;
+        $urlModificar = "formularios_productos_v2.php?id=" . $row['id'] . 
+                        "&nombre=" . urlencode($row['nombre']) .
+                        "&marca=" . urlencode($row['marca']) .
+                        "&modelo=" . urlencode($row['modelo']) .
+                        "&precio=" . urlencode($row['precio']) .
+                        "&cantidad=" . $unidades .
+                        "&detalles=" . urlencode($row['detalles']) .
+                        "&imagen=" . urlencode($row['imagen']);
+        
+        // Convertir & en &amp; para XHTML
+        $urlModificar = str_replace('&', '&amp;', $urlModificar);
         
         echo "<a href=\"" . $urlModificar . "\" class=\"btn-modificar\">Modificar</a>";
         echo "</div>";

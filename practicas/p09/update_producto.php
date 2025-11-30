@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 modelo = ?, 
                 precio = ?, 
                 detalles = ?, 
-                unidades = ?, 
+                cantidad = ?, 
                 imagen = ? 
             WHERE id = ?";
 
