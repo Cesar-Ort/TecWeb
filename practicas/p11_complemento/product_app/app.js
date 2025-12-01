@@ -110,7 +110,7 @@ function validarNombreExistente(nombre) {
             let productos = JSON.parse(response);
             let status = $('#name-status');
             
-            // Verificar si existe un producto con ese nombre exacto
+            // Verificar si existe un producto con ese nombre exacto unidades
             let existe = productos.some(p => p.nombre.toLowerCase() === nombre.toLowerCase());
             
             if(existe) {
@@ -268,7 +268,7 @@ function buscarProductos(search) {
                 productos.forEach(producto => {
                     let descripcion = '';
                     descripcion += '<li>precio: ' + producto.precio + '</li>';
-                    descripcion += '<li>unidades: ' + producto.unidades + '</li>';
+                    descripcion += '<li>cantidad: ' + producto.cantidad + '</li>';
                     descripcion += '<li>modelo: ' + producto.modelo + '</li>';
                     descripcion += '<li>marca: ' + producto.marca + '</li>';
                     descripcion += '<li>detalles: ' + producto.detalles + '</li>';
@@ -313,7 +313,7 @@ function cargarProductoParaEditar(productId) {
             $('#productId').val(producto.id);
             $('#name').val(producto.nombre);
             $('#precio').val(producto.precio);
-            $('#unidades').val(producto.unidades);
+            $('#cantidad').val(producto.cantidad);
             $('#modelo').val(producto.modelo);
             $('#marca').val(producto.marca);
             $('#detalles').val(producto.detalles || '');
@@ -331,7 +331,7 @@ function agregarProducto() {
     let producto = {
         nombre: $('#name').val(),
         precio: parseFloat($('#precio').val()),
-        unidades: parseInt($('#unidades').val()),
+        cantidad: parseInt($('#cantidad').val()),
         modelo: $('#modelo').val(),
         marca: $('#marca').val(),
         detalles: $('#detalles').val() || 'NA',
@@ -371,7 +371,7 @@ function modificarProducto() {
         id: $('#productId').val(),
         nombre: $('#name').val(),
         precio: parseFloat($('#precio').val()),
-        unidades: parseInt($('#unidades').val()),
+        cantidad: parseInt($('#cantidad').val()),
         modelo: $('#modelo').val(),
         marca: $('#marca').val(),
         detalles: $('#detalles').val() || 'NA',
@@ -435,7 +435,7 @@ function limpiarFormulario() {
     $('#productId').val('');
     $('#name').val('');
     $('#precio').val('');
-    $('#unidades').val('');
+    $('#cantidad').val('');
     $('#modelo').val('');
     $('#marca').val('');
     $('#detalles').val('');
