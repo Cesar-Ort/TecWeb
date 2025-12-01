@@ -29,13 +29,35 @@
         <div class="col-md-5">
           <div class="card">
             <div class="card-body">
-              <!-- FORMULARIO PARA AGREGAR PRODUCTO -->
+              <!-- FORMULARIO PARA AGREGAR/MODIFICAR PRODUCTO -->
               <form id="product-form">
                 <div class="form-group">
-                  <input class="form-control" type="text" id="name" placeholder="Nombre de producto">
+                  <input class="form-control" type="text" id="name" placeholder="Nombre de producto" required>
+                  <small id="name-status" class="form-text"></small>
                 </div>
                 <div class="form-group">
-                  <textarea class="form-control" id="description" cols="30" rows="10" placeholder="JSON de producto"></textarea>
+                  <input class="form-control" type="number" id="precio" placeholder="Precio" step="0.01" required>
+                  <small id="precio-status" class="form-text"></small>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" type="number" id="cantidad" placeholder="Cantidad" required>
+                  <small id="unidades-status" class="form-text"></small>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" type="text" id="modelo" placeholder="Modelo" required>
+                  <small id="modelo-status" class="form-text"></small>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" type="text" id="marca" placeholder="Marca" required>
+                  <small id="marca-status" class="form-text"></small>
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" id="detalles" placeholder="Detalles" rows="3"></textarea>
+                  <small id="detalles-status" class="form-text"></small>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" type="text" id="imagen" placeholder="Ruta de imagen">
+                  <small id="imagen-status" class="form-text"></small>
                 </div>
                 <input type="hidden" id="productId">
                 <button class="btn btn-primary btn-block text-center" type="submit">
@@ -61,6 +83,7 @@
                 <td>Id</td>
                 <td>Nombre</td>
                 <td>Descripción</td>
+                <td>Acciones</td>
               </tr>
             </thead>
             <tbody id="products"></tbody>
