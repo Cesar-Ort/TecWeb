@@ -41,7 +41,7 @@ $(document).ready(function() {
         agregarProducto();
     });
     
-    // ELIMINAR PRODUCTO (delegación de eventos) unidades
+    // ELIMINAR PRODUCTO (delegación de eventos)
     $(document).on('click', '.product-delete', function() {
         if(confirm('¿De verdad deseas eliminar el Producto?')) {
             let productId = $(this).closest('tr').attr('productId');
