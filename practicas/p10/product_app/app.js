@@ -1,63 +1,76 @@
 // JSON BASE A MOSTRAR EN FORMULARIO
 var baseJSON = {
     "precio": 0.0,
-    "unidades": 1,
+    "cantidad": 1,
     "modelo": "XX-000",
     "marca": "NA",
     "detalles": "NA",
     "imagen": "img/default.png"
-  };
+};
 
 // FUNCIÓN CALLBACK DE BOTÓN "Buscar"
-function buscarID(e) {
-    /**
-     * Revisar la siguiente información para entender porqué usar event.preventDefault();
-     * http://qbit.com.mx/blog/2013/01/07/la-diferencia-entre-return-false-preventdefault-y-stoppropagation-en-jquery/#:~:text=PreventDefault()%20se%20utiliza%20para,escuche%20a%20trav%C3%A9s%20del%20DOM
-     * https://www.geeksforgeeks.org/when-to-use-preventdefault-vs-return-false-in-javascript/
-     */
+function buscarProducto(e) {
     e.preventDefault();
+    
+    console.log('=== INICIANDO BÚSQUEDA ===');
 
-    // SE OBTIENE EL ID A BUSCAR
-    var id = document.getElementById('search').value;
+    // SE OBTIENE EL CRITERIO DE BÚSQUEDA
+    var search = document.getElementById('search').value;
+    console.log('Texto a buscar:', search);
 
     // SE CREA EL OBJETO DE CONEXIÓN ASÍNCRONA AL SERVIDOR
     var client = getXMLHttpRequest();
     client.open('POST', './backend/read.php', true);
     client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     client.onreadystatechange = function () {
+        console.log('ReadyState:', client.readyState, 'Status:', client.status);
+        
         // SE VERIFICA SI LA RESPUESTA ESTÁ LISTA Y FUE SATISFACTORIA
         if (client.readyState == 4 && client.status == 200) {
-            console.log('[CLIENTE]\n'+client.responseText);
+            console.log('[RESPUESTA DEL SERVIDOR]');
+            console.log(client.responseText);
             
-            // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
-            let productos = JSON.parse(client.responseText);    // similar a eval('('+client.responseText+')');
+            // SE OBTIENE EL ARRAY DE PRODUCTOS A PARTIR DE UN STRING JSON
+            let productos = JSON.parse(client.responseText);
+            console.log('Productos parseados:', productos);
             
-            // SE VERIFICA SI EL OBJETO JSON TIENE DATOS
-            if(Object.keys(productos).length > 0) {
-                // SE CREA UNA LISTA HTML CON LA DESCRIPCIÓN DEL PRODUCTO
-                let descripcion = '';
-                    descripcion += '<li>precio: '+productos.precio+'</li>';
-                    descripcion += '<li>unidades: '+productos.unidades+'</li>';
-                    descripcion += '<li>modelo: '+productos.modelo+'</li>';
-                    descripcion += '<li>marca: '+productos.marca+'</li>';
-                    descripcion += '<li>detalles: '+productos.detalles+'</li>';
-                
-                // SE CREA UNA PLANTILLA PARA CREAR LA(S) FILA(S) A INSERTAR EN EL DOCUMENTO HTML
+            // SE VERIFICA SI HAY PRODUCTOS
+            if(Array.isArray(productos) && productos.length > 0) {
+                console.log('Se encontraron', productos.length, 'productos');
+                // SE CREA LA PLANTILLA PARA TODAS LAS FILAS
                 let template = '';
+                
+                productos.forEach(producto => {
+                    // SE CREA LA DESCRIPCIÓN DE CADA PRODUCTO
+                    let descripcion = '';
+                    descripcion += '<li>precio: '+(producto.precio || 'N/A')+'</li>';
+                    descripcion += '<li>cantidad: '+(producto.cantidad || 0)+'</li>';
+                    descripcion += '<li>modelo: '+(producto.modelo || 'N/A')+'</li>';
+                    descripcion += '<li>marca: '+(producto.marca || 'N/A')+'</li>';
+                    descripcion += '<li>detalles: '+(producto.detalles || 'N/A')+'</li>';
+                    
+                    // SE AGREGA LA FILA A LA PLANTILLA
                     template += `
                         <tr>
-                            <td>${productos.id}</td>
-                            <td>${productos.nombre}</td>
+                            <td>${producto.id}</td>
+                            <td>${producto.nombre}</td>
                             <td><ul>${descripcion}</ul></td>
                         </tr>
                     `;
+                });
 
                 // SE INSERTA LA PLANTILLA EN EL ELEMENTO CON ID "productos"
                 document.getElementById("productos").innerHTML = template;
+            } else {
+                console.log('No se encontraron productos o el array está vacío');
+                // NO SE ENCONTRARON PRODUCTOS
+                document.getElementById("productos").innerHTML = '<tr><td colspan="3">No se encontraron productos</td></tr>';
             }
         }
     };
-    client.send("id="+id);
+    
+    console.log('Enviando petición con:', "search="+search);
+    client.send("search="+search);
 }
 
 // FUNCIÓN CALLBACK DE BOTÓN "Agregar Producto"
@@ -70,6 +83,50 @@ function agregarProducto(e) {
     var finalJSON = JSON.parse(productoJsonString);
     // SE AGREGA AL JSON EL NOMBRE DEL PRODUCTO
     finalJSON['nombre'] = document.getElementById('name').value;
+    
+    // **VALIDACIONES**
+    // Validar nombre
+    if(!finalJSON.nombre || finalJSON.nombre.trim() === '' || finalJSON.nombre.length > 100) {
+        alert('El nombre es requerido y debe tener máximo 100 caracteres');
+        return;
+    }
+    
+    // Validar marca
+    if(!finalJSON.marca || finalJSON.marca.trim() === '') {
+        alert('La marca es requerida');
+        return;
+    }
+    
+    // Validar modelo
+    if(!finalJSON.modelo || finalJSON.modelo.trim() === '' || finalJSON.modelo.length > 25) {
+        alert('El modelo es requerido y debe tener máximo 25 caracteres');
+        return;
+    }
+    
+    // Validar precio
+    if(finalJSON.precio === undefined || finalJSON.precio === null || parseFloat(finalJSON.precio) <= 99.99) {
+        alert('El precio debe ser mayor a 99.99');
+        return;
+    }
+    
+    // Validar detalles
+    if(finalJSON.detalles && finalJSON.detalles.length > 250) {
+        alert('Los detalles deben tener máximo 250 caracteres');
+        return;
+    }
+    
+    // Validar cantidad
+    if(finalJSON.cantidad === undefined || finalJSON.cantidad === null || parseInt(finalJSON.cantidad) < 0) {
+        alert('La cantidad debe ser mayor o igual a 0');
+        return;
+    }
+    
+    // Validar imagen (ruta)
+    if(finalJSON.imagen && finalJSON.imagen.length > 100) {
+        alert('La ruta de la imagen debe tener máximo 100 caracteres');
+        return;
+    }
+
     // SE OBTIENE EL STRING DEL JSON FINAL
     productoJsonString = JSON.stringify(finalJSON,null,2);
 
@@ -81,6 +138,9 @@ function agregarProducto(e) {
         // SE VERIFICA SI LA RESPUESTA ESTÁ LISTA Y FUE SATISFACTORIA
         if (client.readyState == 4 && client.status == 200) {
             console.log(client.responseText);
+            // SE MUESTRA LA RESPUESTA DEL SERVIDOR
+            let respuesta = JSON.parse(client.responseText);
+            window.alert(respuesta.status);
         }
     };
     client.send(productoJsonString);
