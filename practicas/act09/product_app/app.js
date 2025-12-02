@@ -62,15 +62,15 @@ $(document).ready(function() {
         }
     });
     
-    // EDITAR PRODUCTO (delegación de eventos)
+    // EDITAR PRODUCTO 
     $(document).on('click', '.product-item', function() {
         let productId = $(this).attr('productId');
         cargarProductoParaEditar(productId);
     });
     
-    // ELIMINAR PRODUCTO (delegación de eventos)
+    // ELIMINAR PRODUCTO (
     $(document).on('click', '.product-delete', function(e) {
-        e.stopPropagation(); // Evitar que se dispare el click de editar
+        e.stopPropagation(); // Evitamos que se dispare el click de editar
         if(confirm('¿De verdad deseas eliminar el Producto?')) {
             let productId = $(this).closest('tr').attr('productId');
             eliminarProducto(productId);
@@ -218,7 +218,7 @@ function listarProductos() {
         url: './backend/products',
         type: 'GET',
         success: function(productos) {
-            // jQuery ya parseó el JSON automáticamente
+            // La jQuery ya parseó el JSON automáticamente
             
             if(Object.keys(productos).length > 0) {
                 let template = '';
@@ -261,7 +261,7 @@ function buscarProductos(search) {
         url: './backend/products/' + search,
         type: 'GET',
         success: function(productos) {
-            // jQuery ya parseó el JSON automáticamente
+        // La jQuery ya parseó el JSON automáticamente
             
             if(Object.keys(productos).length > 0) {
                 let template = '';
@@ -311,7 +311,7 @@ function cargarProductoParaEditar(productId) {
         url: './backend/product/' + productId,
         type: 'GET',
         success: function(producto) {
-            // jQuery ya parseó el JSON automáticamente
+            // La jQuery ya parseó el JSON automáticamente
             
             // Cargar datos en el formulario
             $('#productId').val(producto.id);
@@ -357,14 +357,14 @@ function agregarProducto() {
                 <li style="list-style: none;">message: ${respuesta.message}</li>
             `;
             
-            // SE HACE VISIBLE LA BARRA DE ESTADO
+            // Se vuelve visible la barra de estado
             $('#product-result').removeClass('d-none').addClass('d-block');
             $('#container').html(template_bar);
             
-            // SE LIMPIAN LOS CAMPOS DEL FORMULARIO
+            // Se limpian los campos del formulario
             limpiarFormulario();
             
-            // SE LISTAN TODOS LOS PRODUCTOS
+            // Se listan todos los productos
             listarProductos();
         },
         error: function(xhr, status, error) {
@@ -446,7 +446,7 @@ function eliminarProducto(id) {
     });
 }
 
-// LIMPIAR FORMULARIO
+// Limpiamos el formulario
 function limpiarFormulario() {
     $('#productId').val('');
     $('#name').val('');
@@ -457,6 +457,6 @@ function limpiarFormulario() {
     $('#detalles').val('');
     $('#imagen').val('');
     
-    // Limpiar mensajes de validación
+    // Se Limpia los mensajes de validación
     $('small').text('').removeClass('text-success text-danger text-warning');
 }

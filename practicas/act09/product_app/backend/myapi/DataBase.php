@@ -11,16 +11,9 @@ abstract class DataBase {
             $pass,
             $db
         );
-    
-        /**
-         * NOTA: si la conexión falló $conexion contendrá false
-         **/
         if(!$this->conexion) {
             die('¡Base de datos NO conextada!');
         }
-        /*else {
-            echo 'Base de datos encontrada';
-        }*/
     }
 }
 ?>

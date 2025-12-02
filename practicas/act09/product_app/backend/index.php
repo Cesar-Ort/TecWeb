@@ -130,7 +130,8 @@ $app->delete('/product', function (Request $request, Response $response) {
         ->withStatus(200);
 });
 
-// Ruta de prueba (opcional)
+/* Comprobacion de que funcione correctamente
+ 
 $app->get('/', function (Request $request, Response $response) {
     $response->getBody()->write(json_encode([
         'message' => 'API REST de Productos funcionando correctamente',
@@ -146,7 +147,7 @@ $app->get('/', function (Request $request, Response $response) {
     return $response
         ->withHeader('Content-Type', 'application/json')
         ->withStatus(200);
-});
+});*/
 
 $app->run();
 ?>

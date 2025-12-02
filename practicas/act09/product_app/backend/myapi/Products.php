@@ -13,13 +13,13 @@ class Products extends DataBase {
     }
 
     public function add($jsonOBJ) {
-        // SE OBTIENE LA INFORMACIÓN DEL PRODUCTO ENVIADA POR EL CLIENTE
+        //  Obtenemos la informacion del producto enviada por el cliente
         $this->data = array(
             'status'  => 'error',
             'message' => 'Ya existe un producto con ese nombre'
         );
         if(isset($jsonOBJ->nombre)) {
-            // SE ASUME QUE LOS DATOS YA FUERON VALIDADOS ANTES DE ENVIARSE
+            // Se asume que los datos ya fueron validados antes de enviarse 
             $sql = "SELECT * FROM productos WHERE nombre = '{$jsonOBJ->nombre}' AND eliminado = 0";
             $result = $this->conexion->query($sql);
             
@@ -41,7 +41,7 @@ class Products extends DataBase {
     }
 
     public function delete($id) {
-        // SE CREA EL ARREGLO QUE SE VA A DEVOLVER EN FORMA DE JSON
+        // Se crea el arreglo que se va a devolver en forma de Json
         $this->data = array(
             'status'  => 'error',
             'message' => 'La consulta falló'
@@ -61,7 +61,7 @@ class Products extends DataBase {
     }
 
     public function edit($jsonOBJ) {
-        // SE CREA EL ARREGLO QUE SE VA A DEVOLVER EN FORMA DE JSON
+        // Creamos el arreglo que se va a devolver en Json
         $this->data = array(
             'status'  => 'error',
             'message' => 'La consulta falló'
@@ -90,7 +90,7 @@ class Products extends DataBase {
             $rows = $result->fetch_all(MYSQLI_ASSOC);
 
             if(!is_null($rows)) {
-                // SE CODIFICAN A UTF-8 LOS DATOS Y SE MAPEAN AL ARREGLO DE RESPUESTA
+                // 
                 foreach($rows as $num => $row) {
                     foreach($row as $key => $value) {
                         $this->data[$num][$key] = $value;
@@ -114,7 +114,6 @@ class Products extends DataBase {
                 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
                 if(!is_null($rows)) {
-                    // SE CODIFICAN A UTF-8 LOS DATOS Y SE MAPEAN AL ARREGLO DE RESPUESTA
                     foreach($rows as $num => $row) {
                         foreach($row as $key => $value) {
                             $this->data[$num][$key] = $value;
@@ -137,7 +136,6 @@ class Products extends DataBase {
                 $row = $result->fetch_assoc();
     
                 if(!is_null($row)) {
-                    // SE CODIFICAN A UTF-8 LOS DATOS Y SE MAPEAN AL ARREGLO DE RESPUESTA
                     foreach($row as $key => $value) {
                         $this->data[$key] = $value;
                     }
@@ -151,10 +149,10 @@ class Products extends DataBase {
     }
 
     public function getData() {
-        // SE HACE LA CONVERSIÓN DE ARRAY A JSON
+        // Se realiza la conversion de Array a Json
         return json_encode($this->data, JSON_PRETTY_PRINT);
     }
 }
 
-//$productos = new Productos();
+
 ?>
