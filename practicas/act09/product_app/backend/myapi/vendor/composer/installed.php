@@ -3,7 +3,7 @@
         'name' => 'tecweb/myapi',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '8582ec4f2f51d6fec73f54e8b82534a3c6151c32',
+        'reference' => 'ddf68c0c48f12e10c7c0684692985edd9eab7b45',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -124,7 +124,7 @@
         'tecweb/myapi' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '8582ec4f2f51d6fec73f54e8b82534a3c6151c32',
+            'reference' => 'ddf68c0c48f12e10c7c0684692985edd9eab7b45',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

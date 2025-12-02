@@ -103,14 +103,13 @@ function validarNombre() {
 
 function validarNombreExistente(nombre) {
     $.ajax({
-        url: './backend/product-search.php',
+        url: './backend/products/' + nombre,
         type: 'GET',
-        data: { search: nombre },
-        success: function(response) {
-            let productos = JSON.parse(response);
+        success: function(productos) {
+            // jQuery ya parseó el JSON automáticamente
             let status = $('#name-status');
             
-            // Verificar si existe un producto con ese nombre exacto unidades
+            // Verificar si existe un producto con ese nombre exacto
             let existe = productos.some(p => p.nombre.toLowerCase() === nombre.toLowerCase());
             
             if(existe) {
@@ -140,7 +139,7 @@ function validarCantidad() {
     let status = $('#cantidad-status');
     
     if(isNaN(cantidad) || cantidad < 0) {
-        status.text('Las unidades deben ser mayor o igual a 0').removeClass('text-success').addClass('text-danger');
+        status.text('La cantidad debe ser mayor o igual a 0').removeClass('text-success').addClass('text-danger');
         return false;
     } else {
         status.text('✓ Válido').removeClass('text-danger').addClass('text-success');
@@ -216,10 +215,10 @@ function validarTodosCampos() {
 // LISTAR TODOS LOS PRODUCTOS
 function listarProductos() {
     $.ajax({
-        url: './backend/product-list.php',
+        url: './backend/products',
         type: 'GET',
-        success: function(response) {
-            let productos = JSON.parse(response);
+        success: function(productos) {
+            // jQuery ya parseó el JSON automáticamente
             
             if(Object.keys(productos).length > 0) {
                 let template = '';
@@ -248,6 +247,10 @@ function listarProductos() {
                 
                 $('#products').html(template);
             }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al listar productos:', error);
+            console.log('Respuesta del servidor:', xhr.responseText);
         }
     });
 }
@@ -255,11 +258,10 @@ function listarProductos() {
 // BUSCAR PRODUCTOS
 function buscarProductos(search) {
     $.ajax({
-        url: './backend/product-search.php',
+        url: './backend/products/' + search,
         type: 'GET',
-        data: { search: search },
-        success: function(response) {
-            let productos = JSON.parse(response);
+        success: function(productos) {
+            // jQuery ya parseó el JSON automáticamente
             
             if(Object.keys(productos).length > 0) {
                 let template = '';
@@ -296,6 +298,9 @@ function buscarProductos(search) {
                 // SE INSERTA LA PLANTILLA EN LA TABLA
                 $('#products').html(template);
             }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al buscar productos:', error);
         }
     });
 }
@@ -303,11 +308,10 @@ function buscarProductos(search) {
 // CARGAR PRODUCTO PARA EDITAR
 function cargarProductoParaEditar(productId) {
     $.ajax({
-        url: './backend/product-single.php',
+        url: './backend/product/' + productId,
         type: 'GET',
-        data: { id: productId },
-        success: function(response) {
-            let producto = JSON.parse(response);
+        success: function(producto) {
+            // jQuery ya parseó el JSON automáticamente
             
             // Cargar datos en el formulario
             $('#productId').val(producto.id);
@@ -322,6 +326,9 @@ function cargarProductoParaEditar(productId) {
             // Cambiar el texto del botón
             $('.btn-primary').text('Modificar Producto');
             edit = true;
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al cargar producto:', error);
         }
     });
 }
@@ -338,15 +345,13 @@ function agregarProducto() {
         imagen: $('#imagen').val() || 'img/default.png'
     };
     
-    let productoJsonString = JSON.stringify(producto, null, 2);
-    
     $.ajax({
-        url: './backend/product-add.php',
+        url: './backend/product',
         type: 'POST',
-        contentType: 'application/json',
-        data: productoJsonString,
-        success: function(response) {
-            let respuesta = JSON.parse(response);
+        contentType: 'application/x-www-form-urlencoded',
+        data: producto,
+        success: function(respuesta) {
+            // jQuery ya parseó el JSON automáticamente
             let template_bar = `
                 <li style="list-style: none;">status: ${respuesta.status}</li>
                 <li style="list-style: none;">message: ${respuesta.message}</li>
@@ -361,6 +366,10 @@ function agregarProducto() {
             
             // SE LISTAN TODOS LOS PRODUCTOS
             listarProductos();
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al agregar producto:', error);
+            console.log('Respuesta del servidor:', xhr.responseText);
         }
     });
 }
@@ -378,15 +387,13 @@ function modificarProducto() {
         imagen: $('#imagen').val() || 'img/default.png'
     };
     
-    let productoJsonString = JSON.stringify(producto, null, 2);
-    
     $.ajax({
-        url: './backend/product-edit.php',
-        type: 'POST',
-        contentType: 'application/json',
-        data: productoJsonString,
-        success: function(response) {
-            let respuesta = JSON.parse(response);
+        url: './backend/product',
+        type: 'PUT',
+        contentType: 'application/x-www-form-urlencoded',
+        data: producto,
+        success: function(respuesta) {
+            // jQuery ya parseó el JSON automáticamente
             let template_bar = `
                 <li style="list-style: none;">status: ${respuesta.status}</li>
                 <li style="list-style: none;">message: ${respuesta.message}</li>
@@ -403,6 +410,10 @@ function modificarProducto() {
             
             // SE LISTAN TODOS LOS PRODUCTOS
             listarProductos();
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al modificar producto:', error);
+            console.log('Respuesta del servidor:', xhr.responseText);
         }
     });
 }
@@ -410,11 +421,12 @@ function modificarProducto() {
 // ELIMINAR PRODUCTO
 function eliminarProducto(id) {
     $.ajax({
-        url: './backend/product-delete.php',
-        type: 'GET',
+        url: './backend/product',
+        type: 'DELETE',
+        contentType: 'application/x-www-form-urlencoded',
         data: { id: id },
-        success: function(response) {
-            let respuesta = JSON.parse(response);
+        success: function(respuesta) {
+            // jQuery ya parseó el JSON automáticamente
             let template_bar = `
                 <li style="list-style: none;">status: ${respuesta.status}</li>
                 <li style="list-style: none;">message: ${respuesta.message}</li>
@@ -426,6 +438,10 @@ function eliminarProducto(id) {
             
             // SE LISTAN TODOS LOS PRODUCTOS
             listarProductos();
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al eliminar producto:', error);
+            console.log('Respuesta del servidor:', xhr.responseText);
         }
     });
 }
