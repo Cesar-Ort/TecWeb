@@ -1,0 +1,13 @@
+{
+    "name": "tecweb/myapi",
+    "description": "API REST para gestión de productos",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "TECWEB\\MYAPI\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.0"
+    }
+}
